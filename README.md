@@ -4,6 +4,7 @@ spacemonitor
 HTML TreeMap of your current disk usage. Great for keeping an eye on large, multi-user filesystems
 
 Installation
+
 1. Configure cron_record_space.sh
 Edit bin/cron_record_space.sh with the directories you wish to monitor and the path to record the log files. Multiple directories can be monitored, as long as the results are written into the same basic path, such as
 /var/www/html/spacemonitor/dir_1
