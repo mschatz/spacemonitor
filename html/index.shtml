@@ -1,0 +1,41 @@
+<html>
+<head>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript" src="/spacemonitor/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+  google.load("visualization", "1", {packages:["treemap"]});
+  google.setOnLoadCallback(drawChart);
+
+  function drawChart() 
+  {
+    var jsonData = $.ajax({url: "<!--#echo var="QUERY_STRING" -->", dataType:"json", async: false}).responseText;
+    var data = new google.visualization.DataTable(jsonData);
+
+    var tree = new google.visualization.TreeMap(document.getElementById('chart_div'));
+    tree.draw(data, {
+              minColor: '#f00',
+              midColor: '#0f0',
+              maxColor: '#00f',
+              headerHeight: 35,
+              fontColor: 'black',
+              showScale: false});
+        }
+</script>
+</head>
+
+<body>
+
+<!--#if expr="$QUERY_STRING" -->
+<h1>Directory Sizes for <!--#echo var="QUERY_STRING" --></h1>
+<div id="chart_div" style="width: 1024; height: 1024;"></div>
+<br>
+<h3>Other Logs</h3>
+<!--#exec cmd="s=`echo $QUERY_STRING | cut -f1 -d'/'`; for i in `/bin/ls -t $s/*.json | head -10`; do echo \"<a href=\"index.shtml?$i\">$i</a><br>\"; done; " -->
+<!--#endif -->
+
+<h3>Pick filesystem to Analyze</h3>
+<!--#exec cmd="for d in `/bin/ls */latest.json`; do echo \"<li><a href=\"index.shtml?$d\">$d</a></li>\"; done" -->
+
+</body>
+</html>
+
