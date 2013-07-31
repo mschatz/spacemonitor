@@ -3,6 +3,9 @@ use strict;
 
 my $root = shift @ARGV;
 $root = "/seq/schatz" if !defined $root;
+$root =~ s/\/$//;
+
+print STDERR "root dir is: $root\n";
 
 my $selfname = ".extra";
 my $treesize = 1024*1024;
@@ -47,6 +50,7 @@ while (<>)
 foreach my $path (keys %sizes)
 {
   my $size = $sizes{$path}->{size};
+  next if !defined $size;
 
   if (exists $sizes{$path}->{childsize})
   {
@@ -69,7 +73,9 @@ foreach my $path (sort keys %sizes)
   my $parent = $sizes{$path}->{parent};
   my $size   = $sizes{$path}->{size};
 
-  if ($path eq $root) { $parent = "null"; }
+  next if !defined $size;
+
+  if ($path eq $root) { $parent = "null"; print STDERR "Found root: $path\n"; }
   else { $parent = "\"$parent\""; }
 
   my $printsize = $size;
@@ -84,7 +90,8 @@ foreach my $path (sort keys %sizes)
   $printsize = sprintf ("%0.02f", $printsize);
   my $sizesuffix = $suffixes[$sizescale];
 
-  my $color = int(10*log ($size)/log(2));
+  my $color = $size;
+  $color = int(10*log ($size)/log(2)) if ($color > 0);
   $size = int($size / $treesize);
 
   print ",\n" if (!$first);
