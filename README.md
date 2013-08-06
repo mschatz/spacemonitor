@@ -1,7 +1,7 @@
 spacemonitor
 ============
 
-HTML TreeMap of your current disk usage. Great for keeping an eye on large, multi-user filesystems
+HTML TreeMap of your current disk usage. Great for keeping an eye on large, multi-user filesystems with an interactive version of 'du' as displayed in a tree map.
 
 Installation
 
