@@ -34,7 +34,7 @@ cat $logdir/$timestamp.full.txt | sort -nr | awk '
         $1 = sprintf("%.1f %s", $1, Units[u]);
         print $0;
      }
-    ' > $logdir/$timestamp.summary.txt
+    ' | head -1000 > $logdir/$timestamp.summary.txt
 
 sort -nrk1 $logdir/$timestamp.full.txt | head -1000 | /root/bin/du_to_json.pl $base > $logdir/$timestamp.1000.json
 ln -sf $timestamp.1000.json $logdir/latest.json
