@@ -1,7 +1,7 @@
 <html>
 <head>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript" src="/spacemonitor/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="jquery-1.10.2.min.js"></script>
 <script type="text/javascript">
   google.load("visualization", "1", {packages:["treemap"]});
   google.setOnLoadCallback(drawChart);
@@ -29,8 +29,20 @@
 <h1>Directory Sizes for <!--#echo var="QUERY_STRING" --></h1>
 <!--#exec cmd="/bin/ls -l $QUERY_STRING" -->
 <br>
+<table>
+<tr>
+<td>
 <div id="chart_div" style="width: 1024; height: 1024;"></div>
-<br>
+</td>
+</tr>
+<tr>
+<td>
+<p align="right">
+<!--#exec cmd="s=`echo $QUERY_STRING | sed s^.1000.json^.summary.txt^`; echo \"<a href=\"$s\">text summary (\"$s\")</a>\"" -->
+</p>
+</td>
+</tr>
+</table>
 <h3>Other Logs</h3>
 <!--#exec cmd="s=`echo $QUERY_STRING | cut -f1 -d'/'`; for i in `/bin/ls -t $s/*.json | head -10`; do echo \"<a href=\"index.shtml?$i\">$i</a><br>\"; done; " -->
 <!--#endif -->
