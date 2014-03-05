@@ -75,6 +75,12 @@ foreach my $path (sort keys %sizes)
 
   next if !defined $size;
 
+  if (!exists $sizes{$parent})
+  {
+    ## Fix in case the parent directory was deleted during the scan
+    $parent = $root;
+  }
+
   if ($path eq $root) { $parent = "null"; print STDERR "Found root: $path\n"; }
   else { $parent = "\"$parent\""; }
 
